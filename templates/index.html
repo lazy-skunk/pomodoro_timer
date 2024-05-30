@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Pomodoro Timer</h1>
+    <div class="timer-container" data-alarm-url="{{ url_for('static', filename='alarm.wav') }}" data-low-alarm-url="{{ url_for('static', filename='low_alarm.wav') }}">
+        <img src="{{ url_for('static', filename='tomato.png') }}" alt="Tomato" class="tomato">
+        <div class="timer" id="timer">25:00</div>
+    </div>
+    <div id="status" class="status">Work</div>
+    <div class="button-container">
+        <button onclick="startTimer()">Start</button>
+        <button class="pause" onclick="pauseTimer()">Pause</button>
+        <button class="reset" onclick="resetTimer()">Reset</button>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
