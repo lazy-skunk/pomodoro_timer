@@ -1,5 +1,6 @@
 .mypy_cache
 .pytest_cache
-.vscode
-my_venv
 __pycache__
+build
+htmlcov
+.coverage

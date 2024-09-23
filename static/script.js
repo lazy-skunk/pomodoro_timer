@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', (event) => {
-    const workDuration = 4//25 * 60;
-    const shortBreakDuration = 4//5 * 60;
-    const longBreakDuration = 4//15 * 60;
-    // const workDuration = 25 * 60;
-    // const shortBreakDuration = 5 * 60;
-    // const longBreakDuration = 15 * 60;
+    // const workDuration = 4//25 * 60;
+    // const shortBreakDuration = 4//5 * 60;
+    // const longBreakDuration = 4//15 * 60;
+    const workDuration = 25 * 60;
+    const shortBreakDuration = 5 * 60;
+    const longBreakDuration = 15 * 60;
     let timer;
     let cycles = 0;
     const maxCycles = 4;
