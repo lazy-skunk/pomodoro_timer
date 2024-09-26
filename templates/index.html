@@ -1,24 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en" data-bs-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pomodoro Timer</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <h1>Pomodoro Timer</h1>
-    <div class="timer-container" data-alarm-url="{{ url_for('static', filename='alarm.wav') }}" data-low-alarm-url="{{ url_for('static', filename='low_alarm.wav') }}">
-        <img src="{{ url_for('static', filename='tomato.png') }}" alt="Tomato" class="tomato">
-        <div class="timer" id="timer">25:00</div>
-    </div>
-    <div id="status" class="status">Work</div>
-    <div class="button-container">
-        <button onclick="startTimer()">Start</button>
-        <button class="pause" onclick="pauseTimer()">Pause</button>
-        <button class="reset" onclick="resetTimer()">Reset</button>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/bootstrap.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/color-modes.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+  </head>
+  <body class="text-center">
+    <div class="container mt-5">
+      <h1 class="display-4">Keep incremental improvements!</h1>
+
+      <div class="timer-container mt-4">
+        <div class="display-2" id="remaining-time">25:00</div>
+      </div>
+
+      <div id="status" class="status h3 my-3">Ready</div>
+
+      <div class="button-container">
+        <button id="start-button" class="btn btn-success btn-lg">Start</button>
+        <button id="pause-button" class="btn btn-warning btn-lg hidden">
+          Pause
+        </button>
+        <button id="resume-button" class="btn btn-success btn-lg hidden">
+          Resume
+        </button>
+        <button id="reset-button" class="btn btn-danger btn-lg hidden">
+          Reset
+        </button>
+      </div>
+
+      <div id="tomato-container" class="my-3"></div>
     </div>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
-</body>
+    {% include 'color_modes.html' %}
+    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/color-modes.js') }}"></script>
+    <script
+      type="module"
+      src="{{ url_for('static', filename='js/main.js') }}"
+    ></script>
+  </body>
 </html>
