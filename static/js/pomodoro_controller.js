@@ -1,0 +1,115 @@
+export class PomodoroController {
+  #model;
+  #ui;
+  #pubsub;
+
+  constructor(model, ui, pubsub) {
+    this.#model = model;
+    this.#ui = ui;
+    this.#pubsub = pubsub;
+  }
+
+  initialize() {
+    const eventMappings = {
+      "timer-start": this.#handleStart.bind(this),
+      "timer-paused": this.#handlePause.bind(this),
+      "timer-resumed": this.#handleResume.bind(this),
+      "timer-reset": this.#handleReset.bind(this),
+      "timer-tick": this.#handleTick.bind(this),
+      "timer-finished": this.#handleFinish.bind(this),
+    };
+    for (const [eventName, handler] of Object.entries(eventMappings)) {
+      this.#pubsub.subscribe(eventName, handler);
+    }
+
+    const uiEventListeners = {
+      onStart: this.#startTimer.bind(this),
+      onPause: this.#pauseTimer.bind(this),
+      onResume: this.#resumeTimer.bind(this),
+      onReset: this.#resetTimer.bind(this),
+    };
+    this.#ui.addEventListeners(uiEventListeners);
+  }
+
+  #startTimer() {
+    this.#model.startTimer();
+
+    this.#ui.showPauseAndResetButtons();
+  }
+
+  #pauseTimer() {
+    this.#model.pauseTimer();
+
+    this.#ui.showResumeButton();
+  }
+
+  #resumeTimer() {
+    this.#model.resumeTimer();
+
+    this.#ui.showPauseButton();
+  }
+
+  #resetTimer() {
+    this.#model.resetTimer();
+
+    this.#ui.showStartButton();
+  }
+
+  #updateRemainingTime(timerStatus) {
+    const SECONDS_IN_A_MINUTE = 60;
+    const minutes = Math.floor(timerStatus.remainingTime / SECONDS_IN_A_MINUTE);
+    const seconds = timerStatus.remainingTime % SECONDS_IN_A_MINUTE;
+    this.#ui.updateRemainingTime(minutes, seconds);
+  }
+
+  #handleStart(timerStatus) {
+    this.#updateRemainingTime(timerStatus);
+
+    this.#ui.updateStatus(timerStatus);
+  }
+
+  #handlePause(timerStatus) {
+    this.#ui.updateStatus(timerStatus);
+
+    this.#ui.showResumeButton();
+  }
+
+  #handleResume(timerStatus) {
+    this.#ui.updateStatus(timerStatus);
+
+    this.#ui.showPauseButton();
+  }
+
+  #handleReset(timerStatus) {
+    this.#updateRemainingTime(timerStatus);
+
+    this.#ui.updateStatus(timerStatus);
+
+    this.#ui.showStartButton();
+
+    this.#ui.clearTomatoes();
+  }
+
+  #handleTick(timerStatus) {
+    this.#updateRemainingTime(timerStatus);
+
+    this.#ui.updateStatus(timerStatus);
+
+    const LOW_ALARM_THRESHOLD = 3;
+    if (timerStatus.remainingTime <= LOW_ALARM_THRESHOLD) {
+      this.#ui.playLowAlarm();
+    }
+  }
+
+  #handleFinish(timerStatus) {
+    this.#updateRemainingTime(timerStatus);
+
+    this.#ui.updateStatus(timerStatus);
+
+    if (timerStatus.isWorkTime) {
+      this.#ui.addTomato();
+    }
+
+    this.#ui.playAlarm();
+  }
+}
