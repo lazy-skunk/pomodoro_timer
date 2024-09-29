@@ -1,37 +1,31 @@
 export class PomodoroUI {
   #elements;
+  #alarm;
+  #lowAlarm;
 
-  constructor() {
+  constructor(alarm, lowAlarm) {
     this.#elements = this.#getDOMElements();
+    this.#alarm = alarm;
+    this.#lowAlarm = lowAlarm;
   }
 
   #getDOMElements() {
     return {
       remainingTime: document.getElementById("remaining-time"),
       statusDisplay: document.getElementById("status"),
-
       startButton: document.getElementById("start-button"),
       pauseButton: document.getElementById("pause-button"),
       resetButton: document.getElementById("reset-button"),
       resumeButton: document.getElementById("resume-button"),
-
       tomatoContainer: document.getElementById("tomato-container"),
     };
   }
 
-  addEventListeners(timer) {
-    this.#elements.startButton.addEventListener("click", () =>
-      timer.startTimer()
-    );
-    this.#elements.pauseButton.addEventListener("click", () =>
-      timer.pauseTimer()
-    );
-    this.#elements.resumeButton.addEventListener("click", () =>
-      timer.resumeTimer()
-    );
-    this.#elements.resetButton.addEventListener("click", () =>
-      timer.resetTimer()
-    );
+  addEventListeners({ onStart, onPause, onResume, onReset }) {
+    this.#elements.startButton.addEventListener("click", onStart);
+    this.#elements.pauseButton.addEventListener("click", onPause);
+    this.#elements.resumeButton.addEventListener("click", onResume);
+    this.#elements.resetButton.addEventListener("click", onReset);
   }
 
   showPauseAndResetButtons() {
@@ -40,14 +34,14 @@ export class PomodoroUI {
     this.#elements.resetButton.style.display = "inline-block";
   }
 
-  showPauseButton() {
-    this.#elements.resumeButton.style.display = "none";
-    this.#elements.pauseButton.style.display = "inline-block";
-  }
-
   showResumeButton() {
     this.#elements.pauseButton.style.display = "none";
     this.#elements.resumeButton.style.display = "inline-block";
+  }
+
+  showPauseButton() {
+    this.#elements.pauseButton.style.display = "inline-block";
+    this.#elements.resumeButton.style.display = "none";
   }
 
   showStartButton() {
@@ -68,27 +62,33 @@ export class PomodoroUI {
     this.#elements.remainingTime.innerText = formattedTime;
   }
 
-  updateStatus(
-    isWorkTime,
-    isBreakTime,
-    isPaused,
-    isReset,
-    currentCycles,
-    maxCycles
-  ) {
-    if (isPaused) {
-      this.#elements.statusDisplay.textContent = "Paused";
-    } else if (isReset) {
-      this.#elements.statusDisplay.textContent = "Ready";
+  updateStatus(status) {
+    const { isWorkTime, isPaused, isBreak, isReset, currentCycles, maxCycles } =
+      status;
+
+    if (isReset) {
+      this.#elements.statusDisplay.textContent = "Ready"; // リセット状態
+    } else if (isPaused) {
+      this.#elements.statusDisplay.textContent = "Paused"; // ポーズ状態
     } else if (isWorkTime) {
-      this.#elements.statusDisplay.textContent = "Work";
-    } else if (isBreakTime) {
-      if (currentCycles < maxCycles) {
-        this.#elements.statusDisplay.textContent = "Short Break";
-      } else {
-        this.#elements.statusDisplay.textContent = "Long Break";
+      this.#elements.statusDisplay.textContent = "Work"; // 作業時間
+    } else {
+      if (isBreak) {
+        if (currentCycles % maxCycles === 0) {
+          this.#elements.statusDisplay.textContent = "Long Break";
+        } else {
+          this.#elements.statusDisplay.textContent = "Short Break";
+        }
       }
     }
+  }
+
+  playAlarm() {
+    this.#alarm.play();
+  }
+
+  playLowAlarm() {
+    this.#lowAlarm.play();
   }
 
   addTomato() {
