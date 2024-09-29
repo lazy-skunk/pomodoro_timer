@@ -1,15 +1,9 @@
+const SECONDS_IN_A_MINUTE = 60;
 export const timerConfig = {
-  workDuration: 3,
-  shortBreakDuration: 1,
-  longBreakDuration: 2,
-  maxCycles: 4,
+  workDuration: 25 * SECONDS_IN_A_MINUTE,
+  shortBreakDuration: 5 * SECONDS_IN_A_MINUTE,
+  longBreakDuration: 15 * SECONDS_IN_A_MINUTE,
 };
-// export const timerConfig = {
-//   workDuration: 25 * 60,
-//   shortBreakDuration: 5 * 60,
-//   longBreakDuration: 15 * 60,
-//   maxCycles: 4,
-// };
 
 export const audioConfig = {
   alarmUrl: "/static/alarm.wav",
