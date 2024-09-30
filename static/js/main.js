@@ -1,7 +1,7 @@
 import { PubSub } from "./pub_sub.js";
-import { PomodoroModel } from "./pomodoro_model.js";
-import { PomodoroUI } from "./pomodoro_ui.js";
-import { PomodoroController } from "./pomodoro_controller.js";
+import { PomodoroTimerModel } from "./pomodoro_timer_model.js";
+import { PomodoroTimerUI } from "./pomodoro_timer_ui.js";
+import { PomodoroTimerController } from "./pomodoro_timer_controller.js";
 import { timerConfig, audioConfig } from "./config.js";
 
 const pubsub = new PubSub();
@@ -9,16 +9,16 @@ const pubsub = new PubSub();
 const alarm = new Audio(audioConfig.alarmUrl);
 const lowAlarm = new Audio(audioConfig.lowAlarmUrl);
 
-const pomodoroUI = new PomodoroUI(alarm, lowAlarm);
+const pomodoroTimerUI = new PomodoroTimerUI(alarm, lowAlarm);
 
-const pomodoroModel = new PomodoroModel(timerConfig, pubsub);
+const pomodoroTimerModel = new PomodoroTimerModel(timerConfig, pubsub);
 
-const pomodoroController = new PomodoroController(
-  pomodoroModel,
-  pomodoroUI,
+const pomodoroTimerController = new PomodoroTimerController(
+  pomodoroTimerModel,
+  pomodoroTimerUI,
   pubsub
 );
 
 document.addEventListener("DOMContentLoaded", () => {
-  pomodoroController.initialize();
+  pomodoroTimerController.initialize();
 });

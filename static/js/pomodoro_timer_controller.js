@@ -1,4 +1,4 @@
-export class PomodoroController {
+export class PomodoroTimerController {
   #model;
   #ui;
   #pubsub;

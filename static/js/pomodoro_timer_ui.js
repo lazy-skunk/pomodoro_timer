@@ -1,4 +1,4 @@
-export class PomodoroUI {
+export class PomodoroTimerUI {
   #elements;
   #alarm;
   #lowAlarm;

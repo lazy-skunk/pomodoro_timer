@@ -1,4 +1,4 @@
-export class PomodoroModel {
+export class PomodoroTimerModel {
   #workDuration;
   #shortBreakDuration;
   #longBreakDuration;
