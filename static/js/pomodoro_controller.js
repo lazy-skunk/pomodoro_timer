@@ -34,25 +34,25 @@ export class PomodoroController {
   #startTimer() {
     this.#model.startTimer();
 
-    this.#ui.showPauseAndResetButtons();
+    this.#ui.enablePauseAndResetButtons();
   }
 
   #pauseTimer() {
     this.#model.pauseTimer();
 
-    this.#ui.showResumeButton();
+    this.#ui.enableResumeButton();
   }
 
   #resumeTimer() {
     this.#model.resumeTimer();
 
-    this.#ui.showPauseButton();
+    this.#ui.enablePauseButton();
   }
 
   #resetTimer() {
     this.#model.resetTimer();
 
-    this.#ui.showStartButton();
+    this.#ui.enableStartButtonOnly();
   }
 
   #updateRemainingTime(timerStatus) {
@@ -71,13 +71,13 @@ export class PomodoroController {
   #handlePause(timerStatus) {
     this.#ui.updateStatus(timerStatus);
 
-    this.#ui.showResumeButton();
+    this.#ui.enableResumeButton();
   }
 
   #handleResume(timerStatus) {
     this.#ui.updateStatus(timerStatus);
 
-    this.#ui.showPauseButton();
+    this.#ui.enablePauseButton();
   }
 
   #handleReset(timerStatus) {
@@ -85,7 +85,7 @@ export class PomodoroController {
 
     this.#ui.updateStatus(timerStatus);
 
-    this.#ui.showStartButton();
+    this.#ui.enableStartButtonOnly();
 
     this.#ui.clearTomatoes();
   }

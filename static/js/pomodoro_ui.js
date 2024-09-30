@@ -9,18 +9,6 @@ export class PomodoroUI {
     this.#lowAlarm = lowAlarm;
   }
 
-  #getDOMElements() {
-    return {
-      remainingTime: document.getElementById("remaining-time"),
-      statusDisplay: document.getElementById("status"),
-      startButton: document.getElementById("start-button"),
-      pauseButton: document.getElementById("pause-button"),
-      resetButton: document.getElementById("reset-button"),
-      resumeButton: document.getElementById("resume-button"),
-      tomatoContainer: document.getElementById("tomato-container"),
-    };
-  }
-
   addEventListeners({ onStart, onPause, onResume, onReset }) {
     this.#elements.startButton.addEventListener("click", onStart);
     this.#elements.pauseButton.addEventListener("click", onPause);
@@ -28,43 +16,27 @@ export class PomodoroUI {
     this.#elements.resetButton.addEventListener("click", onReset);
   }
 
-  #toggleButton(button, show) {
-    if (show) {
-      button.classList.remove("btn-hidden");
-      button.classList.add("btn-visible");
-    } else {
-      button.classList.remove("btn-visible");
-      button.classList.add("btn-hidden");
-    }
-  }
-
-  showPauseAndResetButtons() {
+  enablePauseAndResetButtons() {
     this.#toggleButton(this.#elements.startButton, false);
     this.#toggleButton(this.#elements.pauseButton, true);
     this.#toggleButton(this.#elements.resetButton, true);
   }
 
-  showResumeButton() {
+  enableResumeButton() {
     this.#toggleButton(this.#elements.pauseButton, false);
     this.#toggleButton(this.#elements.resumeButton, true);
   }
 
-  showPauseButton() {
+  enablePauseButton() {
     this.#toggleButton(this.#elements.pauseButton, true);
     this.#toggleButton(this.#elements.resumeButton, false);
   }
 
-  showStartButton() {
+  enableStartButtonOnly() {
     this.#toggleButton(this.#elements.startButton, true);
     this.#toggleButton(this.#elements.pauseButton, false);
     this.#toggleButton(this.#elements.resumeButton, false);
     this.#toggleButton(this.#elements.resetButton, false);
-  }
-
-  #formatTime(minutes, seconds) {
-    const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
-    const formattedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
-    return `${formattedMinutes}:${formattedSeconds}`;
   }
 
   updateRemainingTime(minutes, seconds) {
@@ -112,5 +84,33 @@ export class PomodoroUI {
 
   clearTomatoes() {
     this.#elements.tomatoContainer.innerHTML = "";
+  }
+
+  #getDOMElements() {
+    return {
+      remainingTime: document.getElementById("remaining-time"),
+      statusDisplay: document.getElementById("status"),
+      startButton: document.getElementById("start-button"),
+      pauseButton: document.getElementById("pause-button"),
+      resetButton: document.getElementById("reset-button"),
+      resumeButton: document.getElementById("resume-button"),
+      tomatoContainer: document.getElementById("tomato-container"),
+    };
+  }
+
+  #toggleButton(button, show) {
+    if (show) {
+      button.classList.remove("btn-hidden");
+      button.classList.add("btn-visible");
+    } else {
+      button.classList.remove("btn-visible");
+      button.classList.add("btn-hidden");
+    }
+  }
+
+  #formatTime(minutes, seconds) {
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
+    const formattedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
+    return `${formattedMinutes}:${formattedSeconds}`;
   }
 }
