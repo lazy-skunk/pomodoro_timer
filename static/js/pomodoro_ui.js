@@ -73,17 +73,17 @@ export class PomodoroUI {
     this.#lowAlarm.play();
   }
 
-  addTomato() {
+  addPomodoro() {
     const img = document.createElement("img");
-    img.src = "static/tomato.png";
-    img.alt = "Tomato";
+    img.src = "static/pomodoro.png";
+    img.alt = "Pomodoro";
     img.style.width = "50px";
     img.style.margin = "0 5px";
-    this.#elements.tomatoContainer.appendChild(img);
+    this.#elements.pomodoroContainer.appendChild(img);
   }
 
-  clearTomatoes() {
-    this.#elements.tomatoContainer.innerHTML = "";
+  clearPomodori() {
+    this.#elements.pomodoroContainer.innerHTML = "";
   }
 
   #getDOMElements() {
@@ -94,7 +94,7 @@ export class PomodoroUI {
       pauseButton: document.getElementById("pause-button"),
       resetButton: document.getElementById("reset-button"),
       resumeButton: document.getElementById("resume-button"),
-      tomatoContainer: document.getElementById("tomato-container"),
+      pomodoroContainer: document.getElementById("pomodoro-container"),
     };
   }
 

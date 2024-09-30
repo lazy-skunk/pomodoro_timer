@@ -87,7 +87,7 @@ export class PomodoroController {
 
     this.#ui.enableStartButtonOnly();
 
-    this.#ui.clearTomatoes();
+    this.#ui.clearPomodori();
   }
 
   #handleTick(timerStatus) {
@@ -107,7 +107,7 @@ export class PomodoroController {
     this.#ui.updateStatus(timerStatus);
 
     if (timerStatus.isWorkTime) {
-      this.#ui.addTomato();
+      this.#ui.addPomodoro();
     }
 
     this.#ui.playAlarm();
