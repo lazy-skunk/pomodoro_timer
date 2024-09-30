@@ -18,16 +18,14 @@
     />
   </head>
   <body class="text-center">
-    <div class="container mt-5">
-      <h1 class="display-4">Keep incremental improvements!</h1>
+    <div class="container my-5">
+      <h1 class="display-5">Keep incremental improvements!</h1>
 
-      <div class="timer-container mt-4">
-        <div class="display-2" id="remaining-time">25:00</div>
-      </div>
+      <div id="remaining-time" class="display-1 mt-5">25:00</div>
 
-      <div id="status" class="status h3 my-3">Ready</div>
+      <div id="status" class="display-5 mt-3">Ready</div>
 
-      <div class="button-container">
+      <div class="mt-3">
         <button id="start-button" class="btn btn-success btn-lg btn-visible">
           Start
         </button>
@@ -42,7 +40,7 @@
         </button>
       </div>
 
-      <div id="tomato-container" class="my-3"></div>
+      <div id="tomato-container" class="mt-3"></div>
     </div>
 
     {% include 'color_modes.html' %}
