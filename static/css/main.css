@@ -1,3 +1,7 @@
-.hidden {
+.btn-hidden {
   display: none;
+}
+
+.btn-visible {
+  display: inline-block;
 }

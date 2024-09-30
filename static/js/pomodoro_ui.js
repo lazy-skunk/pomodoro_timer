@@ -28,27 +28,37 @@ export class PomodoroUI {
     this.#elements.resetButton.addEventListener("click", onReset);
   }
 
+  #toggleButton(button, show) {
+    if (show) {
+      button.classList.remove("btn-hidden");
+      button.classList.add("btn-visible");
+    } else {
+      button.classList.remove("btn-visible");
+      button.classList.add("btn-hidden");
+    }
+  }
+
   showPauseAndResetButtons() {
-    this.#elements.startButton.style.display = "none";
-    this.#elements.pauseButton.style.display = "inline-block";
-    this.#elements.resetButton.style.display = "inline-block";
+    this.#toggleButton(this.#elements.startButton, false);
+    this.#toggleButton(this.#elements.pauseButton, true);
+    this.#toggleButton(this.#elements.resetButton, true);
   }
 
   showResumeButton() {
-    this.#elements.pauseButton.style.display = "none";
-    this.#elements.resumeButton.style.display = "inline-block";
+    this.#toggleButton(this.#elements.pauseButton, false);
+    this.#toggleButton(this.#elements.resumeButton, true);
   }
 
   showPauseButton() {
-    this.#elements.pauseButton.style.display = "inline-block";
-    this.#elements.resumeButton.style.display = "none";
+    this.#toggleButton(this.#elements.pauseButton, true);
+    this.#toggleButton(this.#elements.resumeButton, false);
   }
 
   showStartButton() {
-    this.#elements.startButton.style.display = "inline-block";
-    this.#elements.pauseButton.style.display = "none";
-    this.#elements.resumeButton.style.display = "none";
-    this.#elements.resetButton.style.display = "none";
+    this.#toggleButton(this.#elements.startButton, true);
+    this.#toggleButton(this.#elements.pauseButton, false);
+    this.#toggleButton(this.#elements.resumeButton, false);
+    this.#toggleButton(this.#elements.resetButton, false);
   }
 
   #formatTime(minutes, seconds) {
@@ -67,11 +77,11 @@ export class PomodoroUI {
       status;
 
     if (isReset) {
-      this.#elements.statusDisplay.textContent = "Ready"; // リセット状態
+      this.#elements.statusDisplay.textContent = "Ready";
     } else if (isPaused) {
-      this.#elements.statusDisplay.textContent = "Paused"; // ポーズ状態
+      this.#elements.statusDisplay.textContent = "Paused";
     } else if (isWorkTime) {
-      this.#elements.statusDisplay.textContent = "Work"; // 作業時間
+      this.#elements.statusDisplay.textContent = "Work";
     } else {
       if (isBreak) {
         if (currentCycles % maxCycles === 0) {
