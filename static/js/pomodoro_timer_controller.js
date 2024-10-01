@@ -66,6 +66,8 @@ export class PomodoroTimerController {
     this.#updateRemainingTime(timerStatus);
 
     this.#ui.updateStatus(timerStatus);
+
+    this.#ui.addPomodoro(timerStatus);
   }
 
   #handlePause(timerStatus) {
@@ -106,10 +108,10 @@ export class PomodoroTimerController {
 
     this.#ui.updateStatus(timerStatus);
 
-    if (timerStatus.isWorkTime) {
-      this.#ui.addPomodoro();
-    }
-
     this.#ui.playAlarm();
+
+    if (timerStatus.isBreak) {
+      this.#ui.addPomodoro(timerStatus);
+    }
   }
 }

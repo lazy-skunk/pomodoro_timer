@@ -73,13 +73,25 @@ export class PomodoroTimerUI {
     this.#lowAlarm.play();
   }
 
-  addPomodoro() {
-    const img = document.createElement("img");
-    img.src = "static/pomodoro.png";
-    img.alt = "Pomodoro";
-    img.style.width = "50px";
-    img.style.margin = "0 5px";
-    this.#elements.pomodoroContainer.appendChild(img);
+  addPomodoro(status) {
+    const pomodoro = document.createElement("div");
+
+    const { currentCycles } = status;
+    const pomodoroId = `pomodoro-${currentCycles}`;
+    pomodoro.id = pomodoroId;
+
+    pomodoro.classList.add("pomodoro");
+
+    const stemAndLeaves = document.createElement("div");
+    stemAndLeaves.classList.add("stem-leaf");
+    pomodoro.appendChild(stemAndLeaves);
+    for (let i = 1; i <= 5; i++) {
+      const stemAndLeaves = document.createElement("div");
+      stemAndLeaves.classList.add("stem-leaf", `leaf-${i}`);
+      pomodoro.appendChild(stemAndLeaves);
+    }
+
+    this.#elements.pomodoroContainer.appendChild(pomodoro);
   }
 
   clearPomodori() {
