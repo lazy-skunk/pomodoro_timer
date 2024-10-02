@@ -100,6 +100,7 @@ export class PomodoroTimerModel {
 
   #getStatus() {
     return {
+      workDuration: this.#workDuration,
       remainingTime: this.#remainingTime,
       currentCycles: this.#currentCycles,
       maxCycles: this.#MAX_CYCLES,

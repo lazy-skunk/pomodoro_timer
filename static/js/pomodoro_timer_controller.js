@@ -101,6 +101,8 @@ export class PomodoroTimerController {
     if (timerStatus.remainingTime <= LOW_ALARM_THRESHOLD) {
       this.#ui.playLowAlarm();
     }
+
+    this.#ui.ripenPomodoro(timerStatus);
   }
 
   #handleFinish(timerStatus) {
@@ -112,6 +114,8 @@ export class PomodoroTimerController {
 
     if (timerStatus.isBreak) {
       this.#ui.addPomodoro(timerStatus);
+    } else {
+      this.#ui.ripenPomodoro(timerStatus);
     }
   }
 }

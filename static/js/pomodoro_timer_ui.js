@@ -44,9 +44,9 @@ export class PomodoroTimerUI {
     this.#elements.remainingTime.innerText = formattedTime;
   }
 
-  updateStatus(status) {
+  updateStatus(timerStatus) {
     const { isWorkTime, isPaused, isBreak, isReset, currentCycles, maxCycles } =
-      status;
+      timerStatus;
 
     if (isReset) {
       this.#elements.statusDisplay.textContent = "Ready";
@@ -73,10 +73,10 @@ export class PomodoroTimerUI {
     this.#lowAlarm.play();
   }
 
-  addPomodoro(status) {
+  addPomodoro(timerStatus) {
     const pomodoro = document.createElement("div");
 
-    const { currentCycles } = status;
+    const { currentCycles } = timerStatus;
     const pomodoroId = `pomodoro-${currentCycles}`;
     pomodoro.id = pomodoroId;
 
@@ -92,6 +92,27 @@ export class PomodoroTimerUI {
     }
 
     this.#elements.pomodoroContainer.appendChild(pomodoro);
+  }
+
+  ripenPomodoro(timerStatus) {
+    const { workDuration, remainingTime, currentCycles } = timerStatus;
+    const pomodoroId = `pomodoro-${currentCycles}`;
+    const pomodoroElement = document.getElementById(pomodoroId);
+
+    const rStart = 64,
+      rEnd = 255;
+    const gStart = 128,
+      gEnd = 32;
+    const bValue = 0;
+
+    const rValue = Math.floor(
+      rStart + (rEnd - rStart) * (1 - remainingTime / workDuration)
+    );
+    const gValue = Math.floor(
+      gStart - (gStart - gEnd) * (1 - remainingTime / workDuration)
+    );
+
+    pomodoroElement.style.backgroundColor = `rgb(${rValue}, ${gValue}, ${bValue})`;
   }
 
   clearPomodori() {
