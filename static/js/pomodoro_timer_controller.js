@@ -102,7 +102,9 @@ export class PomodoroTimerController {
       this.#ui.playLowAlarm();
     }
 
-    this.#ui.ripenPomodoro(timerStatus);
+    if (timerStatus.isWorkTime) {
+      this.#ui.ripenPomodoro(timerStatus);
+    }
   }
 
   #handleFinish(timerStatus) {
