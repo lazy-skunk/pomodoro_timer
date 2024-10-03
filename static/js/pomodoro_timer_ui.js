@@ -74,22 +74,12 @@ export class PomodoroTimerUI {
   }
 
   addPomodoro(timerStatus) {
-    const pomodoro = document.createElement("div");
-
     const { currentCycles } = timerStatus;
     const pomodoroId = `pomodoro-${currentCycles}`;
-    pomodoro.id = pomodoroId;
+    const pomodoro = this.#createPomodoro(pomodoroId);
 
-    pomodoro.classList.add("pomodoro");
-
-    const stemAndLeaves = document.createElement("div");
-    stemAndLeaves.classList.add("stem-leaf");
-    pomodoro.appendChild(stemAndLeaves);
-    for (let i = 1; i <= 5; i++) {
-      const stemAndLeaves = document.createElement("div");
-      stemAndLeaves.classList.add("stem-leaf", `leaf-${i}`);
-      pomodoro.appendChild(stemAndLeaves);
-    }
+    const stemAndLeavesFragment = this.#createStemAndLeaves();
+    pomodoro.appendChild(stemAndLeavesFragment);
 
     this.#elements.pomodoroContainer.appendChild(pomodoro);
   }
@@ -99,20 +89,29 @@ export class PomodoroTimerUI {
     const pomodoroId = `pomodoro-${currentCycles}`;
     const pomodoroElement = document.getElementById(pomodoroId);
 
-    const rStart = 64,
-      rEnd = 255;
-    const gStart = 128,
-      gEnd = 32;
-    const bValue = 0;
+    const colorRange = {
+      redStart: 64,
+      redEnd: 255,
+      greenStart: 128,
+      greenEnd: 32,
+      blueValue: 0,
+    };
 
-    const rValue = Math.floor(
-      rStart + (rEnd - rStart) * (1 - remainingTime / workDuration)
-    );
-    const gValue = Math.floor(
-      gStart - (gStart - gEnd) * (1 - remainingTime / workDuration)
+    const redValue = this.#calculateColorValue(
+      colorRange.redStart,
+      colorRange.redEnd,
+      remainingTime,
+      workDuration
     );
 
-    pomodoroElement.style.backgroundColor = `rgb(${rValue}, ${gValue}, ${bValue})`;
+    const greenValue = this.#calculateColorValue(
+      colorRange.greenStart,
+      colorRange.greenEnd,
+      remainingTime,
+      workDuration
+    );
+
+    pomodoroElement.style.backgroundColor = `rgb(${redValue}, ${greenValue}, ${colorRange.blueValue})`;
   }
 
   clearPomodori() {
@@ -145,5 +144,34 @@ export class PomodoroTimerUI {
     const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
     const formattedSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
     return `${formattedMinutes}:${formattedSeconds}`;
+  }
+
+  #createPomodoro(id) {
+    const pomodoro = document.createElement("div");
+    pomodoro.id = id;
+    pomodoro.classList.add("pomodoro");
+    return pomodoro;
+  }
+
+  #createStemAndLeaves() {
+    const fragment = document.createDocumentFragment();
+
+    const stem = document.createElement("div");
+    stem.classList.add("stem-leaf");
+    fragment.appendChild(stem);
+
+    for (let i = 1; i <= 5; i++) {
+      const leaf = document.createElement("div");
+      leaf.classList.add("stem-leaf", `leaf-${i}`);
+      fragment.appendChild(leaf);
+    }
+
+    return fragment;
+  }
+
+  #calculateColorValue(start, end, remainingTime, workDuration) {
+    return Math.floor(
+      start + (end - start) * (1 - remainingTime / workDuration)
+    );
   }
 }
