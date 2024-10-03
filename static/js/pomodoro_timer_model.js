@@ -86,10 +86,10 @@ export class PomodoroTimerModel {
       this.#currentCycles++;
       this.#status.isWorkTime = false;
       this.#status.isBreak = true;
-      if (this.#currentCycles < this.#MAX_CYCLES) {
-        this.#remainingTime = this.#shortBreakDuration;
-      } else {
+      if (this.#currentCycles % this.#MAX_CYCLES === 0) {
         this.#remainingTime = this.#longBreakDuration;
+      } else {
+        this.#remainingTime = this.#shortBreakDuration;
       }
     } else {
       this.#status.isWorkTime = true;
